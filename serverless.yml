@@ -6,6 +6,7 @@ provider:
   runtime: nodejs20.x
   environment:
     VIDEO_PROCESSOR_SQS_ARN: ${param:VIDEO_PROCESSOR_SQS_ARN}
+  role: ${param:LAB_ROLE_ARN}
 
 functions:
   video-processor:

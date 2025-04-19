@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Serverless deploy
-        run: yarn serverless deploy --stage ${{ env.STAGE }} --region ${{ env.AWS_REGION }} --verbose --param="VIDEO_PROCESSOR_SQS_ARN=${{ secrets.VIDEO_PROCESSOR_SQS_ARN }}"
+        run: yarn serverless deploy --stage ${{ env.STAGE }} --region ${{ env.AWS_REGION }} --verbose --param="VIDEO_PROCESSOR_SQS_ARN=${{ secrets.VIDEO_PROCESSOR_SQS_ARN }}" --param="LAB_ROLE_ARN=${{ secrets.LAB_ROLE_ARN }}"
         env:
           AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
