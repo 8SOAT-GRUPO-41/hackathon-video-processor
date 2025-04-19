@@ -1,0 +1,25 @@
+service: video-processor
+app: fiap-hackathon-g41
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    VIDEO_PROCESSOR_SQS_ARN: ${param:VIDEO_PROCESSOR_SQS_ARN}
+
+functions:
+  video-processor:
+    handler: src/index.handler
+    events:
+      - http:
+          path: video-processor
+          method: post
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+      - sqs:
+          arn: ${self:provider.environment.VIDEO_PROCESSOR_SQS_ARN}
+plugins:
+  - serverless-offline

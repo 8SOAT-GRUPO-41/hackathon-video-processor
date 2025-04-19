@@ -1,0 +1,27 @@
+{
+  "name": "hackathon-video-processor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "serverless offline start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/8SOAT-GRUPO-41/hackathon-video-processor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/8SOAT-GRUPO-41/hackathon-video-processor/issues"
+  },
+  "homepage": "https://github.com/8SOAT-GRUPO-41/hackathon-video-processor#readme",
+  "description": "",
+  "devDependencies": {
+    "serverless": "^3.40.0",
+    "serverless-offline": "^13.4.0"
+  },
+  "dependencies": {
+  }
+}
