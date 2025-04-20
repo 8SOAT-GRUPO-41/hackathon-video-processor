@@ -36,6 +36,7 @@ export async function processVideoRecord(s3EventRecord: any): Promise<void> {
     await publishStatusUpdate({
       status: "FAILED",
       videoId,
+      errorMessage: error instanceof Error ? error.message : undefined,
     });
 
     throw error;
