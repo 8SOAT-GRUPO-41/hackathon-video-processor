@@ -8,6 +8,7 @@ provider:
   timeout: 300
   environment:
     VIDEO_PROCESSOR_SQS_ARN: ${param:VIDEO_PROCESSOR_SQS_ARN}
+    UPDATE_PROCESSING_STATUS_QUEUE_URL: ${param:UPDATE_PROCESSING_STATUS_QUEUE_URL}
   role: ${param:LAB_ROLE_ARN}
 
 custom:
@@ -44,7 +45,7 @@ layers:
 
 functions:
   video-processor:
-    handler: src/handler.processVideo
+    handler: src/handler.handler
     layers:
       - {Ref: FfmpegLambdaLayer}
     events:
@@ -53,6 +54,7 @@ functions:
 plugins:
   - serverless-offline
   - serverless-esbuild
+  - serverless-dotenv-plugin
 
 package:
   individually: true
