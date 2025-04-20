@@ -21,13 +21,9 @@ export const processVideo: SQSHandler = async (event) => {
         s3: { bucket, object },
       } = s3EventRecord;
       const baseName = path.basename(object.key, path.extname(object.key));
-      console.log({ baseName });
       const videoPath = path.join(tmpdir(), `${baseName}.mp4`);
-      console.log({ videoPath });
       const framesPattern = path.join(tmpdir(), `${baseName}-%04d.jpg`);
-      console.log({ framesPattern });
       const zipPath = path.join(tmpdir(), `${baseName}.zip`);
-      console.log({ zipPath });
 
       const get = await s3.send(
         new GetObjectCommand({ Bucket: bucket.name, Key: object.key })
