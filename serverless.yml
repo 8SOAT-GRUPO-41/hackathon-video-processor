@@ -34,9 +34,9 @@ custom:
 
 layers:
   ffmpeg:
-    name: ffmpeg-layer
+    name: ffmpeg
     description: ffmpeg layer
-    path: ffmpeg-layer
+    path: ffmpeg
     compatibleRuntimes:
       - nodejs20.x
     compatibleArchitectures:
@@ -44,7 +44,7 @@ layers:
 
 functions:
   video-processor:
-    handler: src/handler.handler
+    handler: src/handler.processVideo
     layers:
       - {Ref: FfmpegLambdaLayer}
     events:
