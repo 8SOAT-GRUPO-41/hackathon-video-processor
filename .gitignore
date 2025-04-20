@@ -20,3 +20,4 @@ lambda_build/
 
 # Serverless files
 .serverless/
+.build/

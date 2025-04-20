@@ -19,9 +19,17 @@
   "homepage": "https://github.com/8SOAT-GRUPO-41/hackathon-video-processor#readme",
   "description": "",
   "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/aws-lambda": "^8.10.149",
+    "@types/node": "^22.14.1",
+    "esbuild": "^0.25.2",
     "serverless": "^3.40.0",
-    "serverless-offline": "^13.4.0"
+    "serverless-esbuild": "^1.55.0",
+    "serverless-offline": "^13.4.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.787.0",
+    "archiver": "^7.0.1"
   }
 }

@@ -4,15 +4,57 @@ app: fiap-hackathon-g41
 provider:
   name: aws
   runtime: nodejs20.x
+  memorySize: 1536
+  timeout: 300
   environment:
-    VIDEO_PROCESSOR_SQS_ARN: ${param:VIDEO_PROCESSOR_SQS_ARN}
-  role: ${param:LAB_ROLE_ARN}
+    VIDEO_PROCESSOR_SQS_ARN: arn:aws:sqs:us-east-1:339712708623:hackathon-g41-video-processing-queue
+  role: arn:aws:iam::339712708623:role/LabRole
+
+custom:
+  serverless-offline:
+    useChildProcesses: true
+    noPrependStageInUrl: true
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude:
+      - 'prisma'
+      - '@prisma/client'
+      - 'aws-sdk'
+      - '@aws-sdk/*'
+    target: node20
+    define:
+      require.resolve: undefined
+    platform: node
+    concurrency: 10
+    watch:
+      pattern:
+        - src/**/*.ts
+
+layers:
+  FfmpegLayer:
+    name: ffmpeg-layer
+    description: ffmpeg layer
+    path: ffmpeg-layer
+    compatibleRuntimes:
+      - nodejs20.x
+    compatibleArchitectures:
+      - x86_64
 
 functions:
   video-processor:
-    handler: src/index.handler
+    handler: src/handler.handler
+    layers:
+      - {Ref: FfmpegLayer}
     events:
       - sqs:
           arn: ${self:provider.environment.VIDEO_PROCESSOR_SQS_ARN}
 plugins:
   - serverless-offline
+  - serverless-esbuild
+
+package:
+  individually: true
+  patterns:
+    - '!node_modules/**'
