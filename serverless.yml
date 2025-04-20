@@ -7,8 +7,8 @@ provider:
   memorySize: 1536
   timeout: 300
   environment:
-    VIDEO_PROCESSOR_SQS_ARN: arn:aws:sqs:us-east-1:339712708623:hackathon-g41-video-processing-queue
-  role: arn:aws:iam::339712708623:role/LabRole
+    VIDEO_PROCESSOR_SQS_ARN: ${param:VIDEO_PROCESSOR_SQS_ARN}
+  role: ${param:LAB_ROLE_ARN}
 
 custom:
   serverless-offline:
@@ -33,7 +33,7 @@ custom:
         - src/**/*.ts
 
 layers:
-  FfmpegLayer:
+  ffmpeg:
     name: ffmpeg-layer
     description: ffmpeg layer
     path: ffmpeg-layer
@@ -46,7 +46,7 @@ functions:
   video-processor:
     handler: src/handler.handler
     layers:
-      - {Ref: FfmpegLayer}
+      - {Ref: FfmpegLambdaLayer}
     events:
       - sqs:
           arn: ${self:provider.environment.VIDEO_PROCESSOR_SQS_ARN}
