@@ -7,7 +7,10 @@ import * as path from "path";
 import { downloadFromS3, FRAMES_PREFIX, uploadToS3 } from "./s3.service";
 import { publishStatusUpdate } from "./sqs.service";
 
-export async function processVideoRecord(s3EventRecord: any): Promise<void> {
+export async function processVideoRecord(
+  s3EventRecord: any,
+  sendFailureNotification = false
+): Promise<void> {
   const {
     s3: { bucket, object },
   } = s3EventRecord;
@@ -33,11 +36,13 @@ export async function processVideoRecord(s3EventRecord: any): Promise<void> {
   } catch (error) {
     console.error(`Error processing video ${videoId}:`, error);
 
-    await publishStatusUpdate({
-      status: "FAILED",
-      videoId,
-      errorMessage: error instanceof Error ? error.message : undefined,
-    });
+    if (sendFailureNotification) {
+      await publishStatusUpdate({
+        status: "FAILED",
+        videoId,
+        errorMessage: error instanceof Error ? error.message : undefined,
+      });
+    }
 
     throw error;
   }
